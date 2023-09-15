@@ -1,42 +1,56 @@
-import { View, Text, FlatList, Image, useWindowDimensions, StyleSheet, ScrollView } from "react-native";
+import {
+  View,
+  Text,
+  FlatList,
+  Image,
+  useWindowDimensions,
+  StyleSheet,
+  ScrollView,
+} from "react-native";
 import React from "react";
-import products from "../data/products";
 import BtnDark from "../shared/BtnDark";
+import { useDispatch, useSelector } from "react-redux";
+import { cartSlice } from "../store/cartSlice";
 
+const Product = ({ navigation }) => {
+  const product = useSelector((state) => state.products.selectedProduct);
+  const dispatch = useDispatch();
 
-const Product = () => {
-  const product = products[1];
+  const addToCart = () => {
+    dispatch(cartSlice.actions.addCartItem({ product }));
+    // navigation.navigate("cart");
+  };
 
-  const {width} = useWindowDimensions();
+  const { width } = useWindowDimensions();
 
   return (
     <>
-    <ScrollView>
-      <View>
-      <FlatList
-        data={product.images}
-        renderItem={({item}) =>(
-            <Image source={{uri: item}} style={{width, aspectRatio: 1}} />
-          )
-        }
-        horizontal
-        pagingEnabled
-        showsHorizontalScrollIndicator={false}
-      />
-    </View>
+      <ScrollView>
+        <View>
+          <FlatList
+            data={product.images}
+            renderItem={({ item }) => (
+              <Image source={{ uri: item }} style={{ width, aspectRatio: 1 }} />
+            )}
+            horizontal
+            pagingEnabled
+            showsHorizontalScrollIndicator={false}
+          />
+        </View>
 
-    <View style={styles.productInfo}>
-        <Text style={styles.title}>{product.name}</Text>
+        <View style={styles.productInfo}>
+          <Text style={styles.title}>{product.name}</Text>
 
-        <Text style={styles.price}>${product.price}</Text>
+          <Text style={styles.price}>${product.price}</Text>
 
-        <Text style={styles.description}>{product.description}</Text>
-    </View>
-    </ScrollView>
+          <Text style={styles.description}>{product.description}</Text>
+        </View>
+      </ScrollView>
 
-    <BtnDark>
-      <Text style={styles.btnText}>${product.price}</Text>
-    </BtnDark>
+      <BtnDark onPress={addToCart}>
+        <Text style={styles.btnText}>Add to cart</Text>
+        <Text style={styles.btnText}>${product.price}</Text>
+      </BtnDark>
     </>
   );
 };
@@ -47,19 +61,19 @@ const styles = StyleSheet.create({
     padding: 20,
   },
 
-  title:{
-    fontWeight: 'bold',
+  title: {
+    fontWeight: "bold",
     fontSize: 34,
   },
 
-  price:{
-    fontWeight: '500',
+  price: {
+    fontWeight: "500",
     fontSize: 16,
   },
 
-  description:{
+  description: {
     paddingTop: 20,
-    textAlign: 'justify',
+    textAlign: "justify",
     fontSize: 13,
     lineHeight: 25,
     paddingBottom: 80,
@@ -68,10 +82,10 @@ const styles = StyleSheet.create({
   // btn
 
   btnText: {
-    color: '#fff',
+    color: "#fff",
     fontWeight: "500",
     fontSize: 16,
-  }
+  },
 });
 
 export default Product;

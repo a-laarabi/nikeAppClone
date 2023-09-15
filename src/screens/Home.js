@@ -1,6 +1,5 @@
 import { View, Text, FlatList, Image, StyleSheet } from "react-native";
 import React from "react";
-import products from "../data/products";
 import ListProducts from "../components/ListProducts";
 
 const Home = () => {
