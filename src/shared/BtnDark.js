@@ -4,7 +4,7 @@ import React from 'react'
 const BtnDark = (props) => {
   return (
     <View style={styles.footer}>
-      <Pressable style={styles.btnDark}>
+      <Pressable onPress={props.onPress} style={styles.btnDark}>
         {props.children}
       </Pressable>
     </View>
