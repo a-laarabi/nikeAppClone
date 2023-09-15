@@ -22,6 +22,8 @@ const styles = StyleSheet.create({
   },
 
   btnDark: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
     width: "100%",
     backgroundColor: "#000",
     alignSelf: "center",
